@@ -1,6 +1,6 @@
 package com.example.Payment.service.payload.dto;
 
-import com.example.Payment.service.domain.BookingStatus;
+//import com.example.Payment.service.domain.BookingStatus;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -15,19 +15,19 @@ public class BookingDTO {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Set<Long> serviceIds;
-    private BookingStatus status = BookingStatus.PENDING;
+    private int totalPrice;
 
     public BookingDTO() {
     }
 
-    public BookingDTO(Long id, Long saloonId, Long customerId, LocalDateTime startTime, LocalDateTime endTime, Set<Long> serviceIds, BookingStatus status) {
+    public BookingDTO(Long id, Long saloonId, Long customerId, LocalDateTime startTime, LocalDateTime endTime, Set<Long> serviceIds, int totalPrice) {
         this.id = id;
         this.saloonId = saloonId;
         this.customerId = customerId;
         this.startTime = startTime;
         this.endTime = endTime;
         this.serviceIds = serviceIds;
-        this.status = status;
+        this.totalPrice = totalPrice;
     }
 
     public Long getId() {
@@ -78,11 +78,11 @@ public class BookingDTO {
         this.serviceIds = serviceIds;
     }
 
-    public BookingStatus getStatus() {
-        return status;
+    public int getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setStatus(BookingStatus status) {
-        this.status = status;
+    public void setStatus(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }
