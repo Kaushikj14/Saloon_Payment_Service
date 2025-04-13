@@ -42,7 +42,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public PaymentLinkResponse createOrder(UserDTO user, BookingDTO booking, PaymentMethod paymentMethod) {
+    public PaymentLinkResponse createOrder(UserDTO user, BookingDTO booking, PaymentMethod paymentMethod) throws RazorpayException, StripeException {
 
         Long amount = (long)booking.getTotalPrice();
         PaymentOrder order = new PaymentOrder();
@@ -68,9 +68,14 @@ public class PaymentServiceImpl implements PaymentService {
 
             paymentOrderRepository.save(savedOrder);
         }else{
-            String paymentUrl = createStripePaymentLink(user,
-                    savedOrder.getAmount(),
-                    savedOrder.getId());
+            String paymentUrl = null;
+            try {
+                paymentUrl = createStripePaymentLink(user,
+                        savedOrder.getAmount(),
+                        savedOrder.getId());
+            } catch (StripeException e) {
+                throw new RuntimeException(e);
+            }
 
             paymentLinkResponse.setPayment_link_url(paymentUrl);
 
