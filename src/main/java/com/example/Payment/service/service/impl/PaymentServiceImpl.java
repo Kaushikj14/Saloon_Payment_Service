@@ -41,6 +41,7 @@ public class PaymentServiceImpl implements PaymentService {
         this.paymentOrderRepository = paymentOrderRepository;
     }
 
+//    method to create the order
     @Override
     public PaymentLinkResponse createOrder(UserDTO user, BookingDTO booking, PaymentMethod paymentMethod) throws RazorpayException, StripeException {
 
@@ -84,6 +85,7 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentLinkResponse;
     }
 
+//    retreive payment by order id
     @Override
     public PaymentOrder getPaymentOrderById(Long id) throws Exception {
 
@@ -96,12 +98,16 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentOrder;
     }
 
+
+//    retrieve payment order by payment id
     @Override
     public PaymentOrder getPaymentOrderByPaymentId(String paymentId) {
 
         return paymentOrderRepository.findByPaymentLinkId(paymentId);
     }
 
+
+//    creating payment razoprpay link
     @Override
     public PaymentLink createRazorpayPaymentLink(UserDTO user, Long Amount, Long orderId) throws RazorpayException {
 
@@ -134,6 +140,8 @@ public class PaymentServiceImpl implements PaymentService {
         return razorpay.paymentLink.create(paymentLinkRequest);
     }
 
+
+//    creating stripe payment link
     @Override
     public String createStripePaymentLink(UserDTO user, Long amount, Long orderId) throws StripeException {
 
@@ -167,6 +175,7 @@ public class PaymentServiceImpl implements PaymentService {
         return session.getUrl();
     }
 
+//    method to make all the necessary steps to proceed with payment
     @Override
     public Boolean proceedPayment(PaymentOrder paymentOrder,
                                   String paymentId,
